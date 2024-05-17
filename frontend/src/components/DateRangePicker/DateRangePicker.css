@@ -1,0 +1,7 @@
+input[type="text"] {
+  width: 190px;
+}
+
+#date-picker-popover .popover-body {
+  padding: 0;
+}

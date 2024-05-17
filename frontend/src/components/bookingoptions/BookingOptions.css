@@ -1,0 +1,130 @@
+.placeholder-container {
+  width: 300px;
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.booking-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.booking-options > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.booking-options input[type="text"] {
+  width: 40px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: none;
+  user-select: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.booking-options .counter-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid grey; /* Add border to the container */
+  border-radius: 4px;
+  padding: 0.25rem;
+}
+
+.booking-options .counter-container button {
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.booking-options .counter-container button:disabled {
+  opacity: 0.5;
+  color: grey;
+  cursor: not-allowed;
+}
+
+.booking-options .counter-container input[type="text"] {
+  text-align: center;
+  font-size: 1rem;
+  width: 40px;
+}
+
+.booking-options .horizontal-line {
+  border-bottom: 1px solid #ccc; /* Light grey horizontal line */
+  margin-bottom: 1rem; /* Adjust margin as needed */
+}
+
+.booking-options .counter-container input[type="text"]:disabled {
+  border: none;
+  user-select: none; /* Disable text selection */
+}
+
+
+.booking-options input[type="checkbox"] {
+  display: none;
+}
+
+.booking-options input[type="checkbox"] + label {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.booking-options input[type="checkbox"]:checked + label {
+  background: #007bff;
+}
+
+.booking-options input[type="checkbox"] + label::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.booking-options input[type="checkbox"]:checked + label::after {
+  transform: translateX(14px);
+}
+
+.booking-options .done-button {
+  display: block;
+  width: 100px;
+  margin: 1rem auto 0;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.booking-options .done-button:hover {
+  background-color: #0056b3;
+}
