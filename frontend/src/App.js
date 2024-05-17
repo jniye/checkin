@@ -26,6 +26,7 @@ function App() {
     // .then(response => response.json())
     // .then(data => console.log('Success:', data))
     // .catch((error) => console.error('Error:', error));
+    console.log(bookingJson)
     setSuggestions([
       { name: "Place A", rate: 4.5, comments: 150 },
       { name: "Place B", rate: 4.0, comments: 85 },

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./SearchBar.css";
-import BookingOptions from "../bookingoptions/BookingOptions";
+import BookingOptions from "../BookingOptions/BookingOptions";
 import DateRangePicker from "../DateRangePicker/DateRangePicker";
 
 function SearchBar({ onSearch }) {
@@ -14,6 +14,7 @@ function SearchBar({ onSearch }) {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // New state for error message
+  const [childAges, setChildAges] = useState([]); // State for child ages
 
   const searchBarRef = useRef(null);
   const optionsButtonRef = useRef(null);
@@ -46,22 +47,40 @@ function SearchBar({ onSearch }) {
     };
   }, []);
 
+  const getDateString = (date) => {
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2); // Adding 1 because months are zero-based
+    var day = ("0" + date.getDate()).slice(-2);
+    // Concatenate the parts with the desired format
+    var dateString = year + "-" + month + "-" + day;
+    return dateString
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!destination.trim()) {
       setErrorMessage("Enter a destination to start searching.");
       return;
     }
+    if (
+      children > 0 &&
+      (childAges.length !== children || childAges.some((age) => age === ""))
+    ) {
+      setErrorMessage("Please provide ages for all children.");
+      setIsOptionsVisible(true); // Show options popup
+      return;
+    }
     setErrorMessage(""); // Clear the error message if validation passes
 
     const bookingDetails = {
-      destination,
-      checkInDate,
-      checkOutDate,
-      adults,
-      children,
-      rooms,
-      pets,
+      query: destination,
+      checkin: getDateString(checkInDate),
+      checkout: getDateString(checkOutDate),
+      group_adults: adults,
+      group_children: children,
+      no_rooms: rooms,
+      has_pets: pets,
+      age: childAges, // Include child ages in booking details
     };
     onSearch(bookingDetails);
   };
@@ -123,6 +142,8 @@ function SearchBar({ onSearch }) {
           optionsPopupRef={optionsPopupRef}
           handleVisible={handleOptionsVisible}
           getPlaceholderText={getPlaceholderText}
+          childAges={childAges} // Pass child ages state
+          setChildAges={setChildAges} // Pass setChildAges function
         />
         <button type="submit">Search</button>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./BookingOptions.css";
 
 function BookingOptions({
@@ -16,7 +16,18 @@ function BookingOptions({
   optionsPopupRef,
   handleVisible,
   getPlaceholderText,
+  childAges,
+  setChildAges,
 }) {
+  useEffect(() => {
+    // Adjust the childAges array when the number of children changes
+    if (children > childAges.length) {
+      setChildAges([...childAges, ...Array(children - childAges.length).fill('')]);
+    } else if (children < childAges.length) {
+      setChildAges(childAges.slice(0, children));
+    }
+  }, [children, childAges, setChildAges]);
+
   function Counter({ label, value, onIncrement, onDecrement }) {
     return (
       <div>
@@ -24,7 +35,7 @@ function BookingOptions({
         <div className="counter-container">
           <button
             onClick={onDecrement}
-            disabled={value <= (label === "Rooms" || "Adults" ? 1 : 0)}
+            disabled={value <= ((label === "Rooms" || label === "Adults") ? 1 : 0)}
           >
             -
           </button>
@@ -44,6 +55,9 @@ function BookingOptions({
         readOnly
         value={getPlaceholderText()}
         ref={optionsButtonRef}
+        style={{
+          width: "200px",
+        }}
       />
       {isOptionsVisible && (
         <div className="dropdown-container" ref={optionsPopupRef}>
@@ -60,6 +74,29 @@ function BookingOptions({
               onIncrement={() => setChildren(children + 1)}
               onDecrement={() => setChildren(children - 1)}
             />
+            {children > 0 && (
+              <div className="child-ages-container">
+                {childAges.map((age, index) => (
+                  <div key={index} className="child-age-select">
+                    <select
+                      value={age}
+                      onChange={(e) => {
+                        const newAges = [...childAges];
+                        newAges[index] = e.target.value;
+                        setChildAges(newAges);
+                      }}
+                    >
+                      <option value="">Age needed</option>
+                      {[...Array(18).keys()].map((age) => (
+                        <option key={age} value={age}>
+                          {age} years old
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+            )}
             <Counter
               label="Rooms"
               value={rooms}

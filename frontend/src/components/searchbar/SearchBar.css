@@ -20,12 +20,13 @@
 
 .search-bar input[type="text"],
 .search-bar input[type="date"],
+.search-bar button,
 .search-bar select {
   width: max-content;
   text-align: left;
   padding: 10px;
-  margin: 0 5px;
-  border: none;
+  margin: 0 2px;
+  border: 2px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
